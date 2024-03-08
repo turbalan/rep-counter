@@ -1,0 +1,103 @@
+[
+  {
+    "id": "free-weight",
+    "name": "Free Weight",
+    "weighted": true,
+    "exercises": [
+      {
+        "id": "benchPress",
+        "name": "Bench Press",
+        "description": "Lie on a flat bench with a barbell grasped in both hands. Lower the barbell to the chest, then press it upward until the arms are extended."
+      },
+      {
+        "id": "squat",
+        "name": "Squat",
+        "description": "Stand with feet shoulder-width apart, holding a barbell across your upper back. Lower your body by bending your knees and hips until your thighs are parallel to the ground, then return to standing."
+      },
+      {
+        "id": "deadlift",
+        "name": "Deadlift",
+        "description": "Stand with feet shoulder-width apart, bend at the hips and knees to grasp the barbell with an overhand grip. Lift the barbell by extending your hips and knees until you're standing upright."
+      },
+      {
+        "id": "bentOverRow",
+        "name": "Bent Over Row",
+        "description": "Stand with feet shoulder-width apart, holding a barbell with an overhand grip. Bend at the hips until your torso is nearly parallel to the ground, then pull the barbell towards your lower chest."
+      },
+      {
+        "id": "shoulderPress",
+        "name": "Shoulder Press",
+        "description": "Stand with feet shoulder-width apart, holding a barbell at shoulder height. Press the barbell upward until the arms are fully extended overhead, then lower it back down."
+      }
+    ]
+  },
+  {
+    "id": "kettlebells",
+    "name": "Kettlebells",
+    "weighted": true,
+    "exercises": [
+      {
+        "id": "swing",
+        "name": "Kettlebell Swing",
+        "description": "Stand with feet shoulder-width apart, holding a kettlebell with both hands. Bend at the hips and knees, swinging the kettlebell between the legs, then forcefully extend the hips to swing the kettlebell to shoulder height."
+      },
+      {
+        "id": "turkishGetUp",
+        "name": "Kettlebell Turkish Get-Up",
+        "description": "Lie on your back with a kettlebell in one hand, arm extended toward the ceiling. Roll onto your side, then push up onto your elbow and hand. Lift your hips off the ground and slide your leg underneath your body until you're kneeling. Stand up while keeping the kettlebell extended overhead. Reverse the movement to return to the starting position."
+      },
+      {
+        "id": "clean",
+        "name": "Kettlebell Clean",
+        "description": "Stand with feet shoulder-width apart, holding a kettlebell in one hand. Swing the kettlebell between the legs, then extend the hips and knees to propel the kettlebell upward. As the kettlebell rises, pull it towards the shoulder, flipping it over onto the back of the wrist and catching it in the racked position."
+      },
+      {
+        "id": "snatch",
+        "name": "Kettlebell Snatch",
+        "description": "Stand with feet shoulder-width apart, holding a kettlebell in one hand. Swing the kettlebell between the legs, then extend the hips and knees to propel the kettlebell upward. As the kettlebell rises, pull it overhead in one fluid motion, locking out the arm at the top."
+      },
+      {
+        "id": "press",
+        "name": "Kettlebell Press",
+        "description": "Stand with feet shoulder-width apart, holding a kettlebell in the racked position at shoulder height. Press the kettlebell overhead until the arm is fully extended, then lower it back down to the racked position."
+      }
+    ]
+  },
+  {
+    "id": "body-weight",
+    "name": "Body Weight",
+    "weighted": false,
+    "exercises": [
+      {
+        "id": "pushups",
+        "name": "Push-ups",
+        "description": "Start in a plank position with hands slightly wider than shoulder-width apart. Lower your body until your chest nearly touches the ground, then push back up to the starting position."
+      },
+      {
+        "id": "squats",
+        "name": "Squats",
+        "description": "Stand with feet shoulder-width apart. Lower your body by bending your knees and pushing your hips back as if you're sitting in a chair. Keep your chest up and back straight. Return to standing position."
+      },
+      {
+        "id": "lunges",
+        "name": "Lunges",
+        "description": "Stand with feet hip-width apart. Step forward with one leg, lowering your hips until both knees are bent at a 90-degree angle. Push back up to the starting position and repeat with the other leg."
+      },
+      {
+        "id": "plank",
+        "name": "Plank",
+        "description": "Start in a push-up position with hands directly beneath your shoulders. Keep your body in a straight line from head to heels, engaging your core muscles. Hold this position for the desired duration."
+      },
+      {
+        "id": "burpees",
+        "name": "Burpees",
+        "description": "Start in a standing position. Drop into a squat position and place your hands on the ground. Kick your feet back into a plank position. Perform a push-up. Jump your feet back to the squat position. Jump explosively into the air, reaching your arms overhead."
+      },
+      {
+        "id": "pull-up",
+        "name": "Pull-up",
+        "description": "The pull-up is a strength training exercise that targets the upper body, particularly the muscles of the back, arms, and shoulders. To perform a pull-up, grip a bar with hands shoulder-width apart, palms facing away from you. Hang with arms fully extended, then pull yourself up until your chin passes the bar. Lower yourself back down with control to complete one repetition."
+      }
+    ]
+  }
+]

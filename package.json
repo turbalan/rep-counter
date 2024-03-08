@@ -1,0 +1,39 @@
+{
+  "name": "rep-counter",
+  "version": "1.0.0",
+  "description": "A simple counter to track reps when working out",
+  "main": "index.js",
+  "author": "Pavel Kuts <pavkuts@gmail.com>",
+  "license": "ISC",
+  "scripts": {
+    "dev": "parcel public/index.html",
+    "build": "parcel public/index.html",
+    "new-component": "new-component"
+  },
+  "keywords": [
+    "workout",
+    "counter"
+  ],
+  "devDependencies": {
+    "parcel": "^2.12.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-react-app": "^7.0.1",
+    "new-component": "^5.0.2",
+    "prettier": "^3.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "staticFiles": {
+    "staticPath": "assets"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
+  }
+}
