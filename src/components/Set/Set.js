@@ -8,6 +8,8 @@ To have a set you:
 2. To select an exercise you click on that exercise
 3. After that selection you enter the reps in the set and the weight used
 4. After each set you click on a "set complete" button that records that set
+5. After completing some sets, the user can click on a "save workout"
+    button, which will be saved to localstorage
 */
 function Set() {
   const [currentExercise, setCurrentExercise] = React.useState({});
@@ -25,6 +27,37 @@ function Set() {
 
   const json = JSON.stringify(data);
   const exercises = JSON.parse(json);
+
+  const clearSets = () => {
+    localStorage.removeItem('sets');
+    setSetCount(0);
+    setCurrentExercise({});
+    setRepCount(0);
+    setRepWeight(0);
+  };
+
+  const handleSaveSet = (set) => {
+    let storedSets = JSON.parse(localStorage.getItem('sets')) || [];
+    if (storedSets.length > 0) {
+      storedSets = [...storedSets, set];
+    } else {
+      storedSets.push(set);
+    }
+    localStorage.setItem('sets', JSON.stringify(storedSets));
+  };
+
+  const handleCompleteExercise = () => {
+    let storedSets = JSON.parse(localStorage.getItem('sets'));
+    let storedExercises = JSON.parse(localStorage.getItem('exercises')) || [];
+    if (storedExercises.length > 0) {
+      storedExercises = [...storedExercises, storedSets];
+    } else {
+      storedExercises.push(storedSets);
+    }
+    localStorage.setItem('exercises', JSON.stringify(storedExercises));
+    clearSets();
+  };
+
   return (
     <div>
       <ExercisesList
@@ -79,17 +112,34 @@ function Set() {
               </button>
             </div>
           )}
-
-          <button
-            onClick={() => {
-              setSetCount(setCount + 1);
-            }}
-          >
-            Count this set
-          </button>
-          <p>{setCount}</p>
+          <p>
+            <button
+              onClick={() => {
+                setSetCount(setCount + 1);
+                handleSaveSet({
+                  exercise: currentExercise.name,
+                  reps: repCount,
+                  weight: repWeight,
+                });
+              }}
+            >
+              Count this set
+            </button>
+            {setCount}
+          </p>
         </div>
       ) : null}
+      {setCount > 0 && (
+        <div>
+          <button
+            onClick={() => {
+              handleCompleteExercise();
+            }}
+          >
+            Complete {currentExercise.name}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
