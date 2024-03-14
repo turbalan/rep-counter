@@ -43,18 +43,22 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
       {currentExercise.name ? (
         <div>
           <div>
-            <label htmlFor="rep-number">
-              How many reps?{' '}
-              <input
-                ref={repInputRef}
-                id="rep-number"
-                type="number"
-                value={repCount}
-                onChange={(event) => {
-                  setRepCount(event.target.value);
-                }}
-              />
-            </label>
+            {workoutStatus === STATUS.idle ? (
+              <label htmlFor="rep-number">
+                How many reps?{' '}
+                <input
+                  ref={repInputRef}
+                  id="rep-number"
+                  type="number"
+                  value={repCount}
+                  onChange={(event) => {
+                    setRepCount(event.target.value);
+                  }}
+                />
+              </label>
+            ) : (
+              <p>Reps: <strong>{repCount}</strong></p>
+            )}
           </div>
           {currentExercise.weighted ? (
             <div>
@@ -89,20 +93,32 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
               </button>
             </div>
           )}
-          <button
-            disabled={repCount === 0 || (currentExercise.weighted && repWeight === 0)}
-            onClick={() => {
-              setSetCount(setCount + 1);
-              handleSaveSet({
-                exercise: currentExercise.name,
-                reps: repCount,
-                weight: repWeight,
-              });
-            }}
-          >
-            Count this set
-          </button>
-          {setCount}
+          {workoutStatus === STATUS.idle ? (
+            <button
+              disabled={repCount === 0 || (currentExercise.weighted && repWeight === 0)}
+              onClick={() => {
+                setWorkoutStatus(STATUS.working)
+              }}
+            >
+              Start Workout
+            </button>
+          ) : (
+            <>
+              <button
+                onClick={() => {
+                  setSetCount(setCount + 1);
+                  handleSaveSet({
+                    exercise: currentExercise.name,
+                    reps: repCount,
+                    weight: repWeight,
+                  });
+                }}
+              >
+                Count this set
+              </button>
+              <p>{setCount}</p>
+            </>
+          )}
         </div>
       ) : null
       }
