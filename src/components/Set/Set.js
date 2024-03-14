@@ -2,6 +2,7 @@ import React from 'react';
 import * as data from '/data/exercises.json';
 import ExercisesList from '../ExercisesList';
 import { WorkoutsContext } from '../WorkoutProvider';
+import CurrentExercise from '../CurrentExercise/CurrentExercise';
 
 /*
 To have a set you:
@@ -14,40 +15,9 @@ To have a set you:
 */
 function Set() {
   const [currentExercise, setCurrentExercise] = React.useState({});
-  const [repCount, setRepCount] = React.useState(0);
-  const [repWeight, setRepWeight] = React.useState(0);
-  const [setCount, setSetCount] = React.useState(0);
-
-  const repInputRef = React.useRef();
-  const weightInputRef = React.useRef();
-
-  const { handleCompleteExercise, workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
-
-  React.useEffect(() => {
-    console.log(currentExercise);
-    Object.hasOwn(currentExercise, 'name') && repInputRef.current.focus();
-  }, [currentExercise]);
 
   const json = JSON.stringify(data);
   const exercises = JSON.parse(json);
-
-  const clearSets = () => {
-    localStorage.removeItem('sets');
-    setSetCount(0);
-    setCurrentExercise({});
-    setRepCount(0);
-    setRepWeight(0);
-  };
-
-  const handleSaveSet = (set) => {
-    let storedSets = JSON.parse(localStorage.getItem('sets')) || [];
-    if (storedSets.length > 0) {
-      storedSets = [...storedSets, set];
-    } else {
-      storedSets.push(set);
-    }
-    localStorage.setItem('sets', JSON.stringify(storedSets));
-  };
 
   return (
     <div>
@@ -56,90 +26,7 @@ function Set() {
         currentExercise={currentExercise}
         setCurrentExercise={setCurrentExercise}
       />
-      {typeof currentExercise.length === 'undefined' ? (
-        <p>{currentExercise.name}</p>
-      ) : null}
-
-      {currentExercise.name ? (
-        <div>
-          <div>
-            <label htmlFor="rep-number">
-              How many reps?{' '}
-              <input
-                ref={repInputRef}
-                id="rep-number"
-                type="number"
-                value={repCount}
-                onChange={(event) => {
-                  setRepCount(event.target.value);
-                }}
-              />
-            </label>
-          </div>
-          {currentExercise.weighted ? (
-            <div>
-              {workoutStatus === STATUS.idle ? (
-                <label htmlFor="rep-weight">
-                  What's the weight?{' '}
-                  <input
-                    ref={weightInputRef}
-                    id="rep-weigh"
-                    type="number"
-                    value={repWeight}
-                    onChange={(event) => {
-                      setRepWeight(event.target.value);
-                    }}
-                  />
-                </label>
-              ) : (
-                <p>
-                  Weight: <strong>{repWeight}</strong>
-                </p>
-              )}
-            </div>
-          ) : (
-            <div>
-              <p>Make the {currentExercise.name} weighted?</p>
-              <button
-                onClick={() => {
-                  setCurrentExercise({ ...currentExercise, weighted: true });
-                }}
-              >
-                Make Weighted
-              </button>
-            </div>
-          )}
-          <p>
-            <button
-              disabled={repCount === 0 || (currentExercise.weighted && repWeight === 0)}
-              onClick={() => {
-                setSetCount(setCount + 1);
-                handleSaveSet({
-                  exercise: currentExercise.name,
-                  reps: repCount,
-                  weight: repWeight,
-                });
-              }}
-            >
-              Count this set
-            </button>
-            {setCount}
-          </p>
-        </div>
-      ) : null
-      }
-      {setCount > 0 && (
-        <div>
-          <button
-            onClick={() => {
-              handleCompleteExercise();
-              clearSets();
-            }}
-          >
-            Complete {currentExercise.name}
-          </button>
-        </div>
-      )}
+      <CurrentExercise currentExercise={currentExercise} setCurrentExercise={setCurrentExercise} />
     </div>
   );
 }
