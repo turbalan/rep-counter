@@ -1,6 +1,7 @@
 import React from 'react';
 import * as data from '/data/exercises.json';
 import ExercisesList from '../ExercisesList';
+import { WorkoutsContext } from '../WorkoutProvider';
 
 /*
 To have a set you:
@@ -19,6 +20,8 @@ function Set() {
 
   const repInputRef = React.useRef();
   const weightInputRef = React.useRef();
+
+  const { handleCompleteExercise, workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
 
   React.useEffect(() => {
     console.log(currentExercise);
@@ -44,18 +47,6 @@ function Set() {
       storedSets.push(set);
     }
     localStorage.setItem('sets', JSON.stringify(storedSets));
-  };
-
-  const handleCompleteExercise = () => {
-    let storedSets = JSON.parse(localStorage.getItem('sets'));
-    let storedExercises = JSON.parse(localStorage.getItem('exercises')) || [];
-    if (storedExercises.length > 0) {
-      storedExercises = [...storedExercises, storedSets];
-    } else {
-      storedExercises.push(storedSets);
-    }
-    localStorage.setItem('exercises', JSON.stringify(storedExercises));
-    clearSets();
   };
 
   return (
@@ -87,18 +78,24 @@ function Set() {
           </div>
           {currentExercise.weighted ? (
             <div>
-              <label htmlFor="rep-weight">
-                What's the weight?{' '}
-                <input
-                  ref={weightInputRef}
-                  id="rep-weigh"
-                  type="number"
-                  value={repWeight}
-                  onChange={(event) => {
-                    setRepWeight(event.target.value);
-                  }}
-                />
-              </label>
+              {workoutStatus === STATUS.idle ? (
+                <label htmlFor="rep-weight">
+                  What's the weight?{' '}
+                  <input
+                    ref={weightInputRef}
+                    id="rep-weigh"
+                    type="number"
+                    value={repWeight}
+                    onChange={(event) => {
+                      setRepWeight(event.target.value);
+                    }}
+                  />
+                </label>
+              ) : (
+                <p>
+                  Weight: <strong>{repWeight}</strong>
+                </p>
+              )}
             </div>
           ) : (
             <div>
@@ -114,6 +111,7 @@ function Set() {
           )}
           <p>
             <button
+              disabled={repCount === 0 || (currentExercise.weighted && repWeight === 0)}
               onClick={() => {
                 setSetCount(setCount + 1);
                 handleSaveSet({
@@ -128,12 +126,14 @@ function Set() {
             {setCount}
           </p>
         </div>
-      ) : null}
+      ) : null
+      }
       {setCount > 0 && (
         <div>
           <button
             onClick={() => {
               handleCompleteExercise();
+              clearSets();
             }}
           >
             Complete {currentExercise.name}

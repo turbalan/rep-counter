@@ -1,5 +1,5 @@
 import React from 'react';
-import Exercise from '../Exercise';
+import ExerciseListItem from '../ExerciseListItem';
 
 function ExercisesList({ exercises, currentExercise, setCurrentExercise }) {
   const [isListOpen, setIsListOpen] = React.useState(false);
@@ -29,7 +29,7 @@ function ExercisesList({ exercises, currentExercise, setCurrentExercise }) {
                 {item.exercises.map((exercise) => {
                   return (
                     <li key={exercise.id}>
-                      <Exercise
+                      <ExerciseListItem
                         exercise={exercise}
                         weighted={item.weighted}
                         setCurrentExercise={setCurrentExercise}

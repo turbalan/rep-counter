@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Exercise({ exercise, weighted, setCurrentExercise }) {
+function ExerciseListItem({ exercise, weighted, setCurrentExercise }) {
   const { name } = exercise;
 
   return (
     <button
-      onClick={(event) => {
+      onClick={() => {
         setCurrentExercise({ ...exercise, weighted });
       }}
     >
@@ -14,4 +14,4 @@ function Exercise({ exercise, weighted, setCurrentExercise }) {
   );
 }
 
-export default Exercise;
+export default ExerciseListItem;
