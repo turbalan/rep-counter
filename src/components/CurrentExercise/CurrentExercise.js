@@ -46,18 +46,29 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
         <div>
           <div>
             {workoutStatus === STATUS.idle ? (
-              <label htmlFor="rep-number">
-                How many reps?{' '}
-                <input
-                  ref={repInputRef}
-                  id="rep-number"
-                  type="number"
-                  value={repCount}
-                  onChange={(event) => {
-                    setRepCount(event.target.value);
-                  }}
-                />
-              </label>
+              <>
+                <label htmlFor="rep-number">
+                  How many reps?{' '}
+                  <input
+                    ref={repInputRef}
+                    id="rep-number"
+                    type="number"
+                    value={repCount}
+                    onChange={(event) => {
+                      setRepCount(event.target.value);
+                    }}
+                  />
+                </label>
+                {repCount ? (
+                  <button onClick={() => {
+                    setRepCount(0);
+                    repInputRef.current.focus();
+                  }}>
+                    Reset reps
+                  </button>
+                  ) : null
+                }
+              </>
             ) : (
               <p>Reps: <strong>{repCount}</strong></p>
             )}
@@ -65,18 +76,29 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
           {currentExercise.weighted ? (
             <div>
               {workoutStatus === STATUS.idle ? (
-                <label htmlFor="rep-weight">
-                  What's the weight?{' '}
-                  <input
-                    ref={weightInputRef}
-                    id="rep-weigh"
-                    type="number"
-                    value={repWeight}
-                    onChange={(event) => {
-                      setRepWeight(event.target.value);
-                    }}
-                  />
-                </label>
+                <>
+                  <label htmlFor="rep-weight">
+                    What's the weight?{' '}
+                    <input
+                      ref={weightInputRef}
+                      id="rep-weigh"
+                      type="number"
+                      value={repWeight}
+                      onChange={(event) => {
+                        setRepWeight(event.target.value);
+                      }}
+                    />
+                  </label>
+                  {repWeight ? (
+                    <button onClick={() => {
+                      setRepWeight(0);
+                      weightInputRef.current.focus();
+                    }}>
+                      Reset weight
+                    </button>
+                  ) : null
+                  }
+                </>
               ) : (
                 <p>
                   Weight: <strong>{repWeight}</strong>
@@ -91,6 +113,7 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
                   <button
                     onClick={() => {
                       setCurrentExercise({ ...currentExercise, weighted: true });
+                      weightInputRef?.current?.focus();
                     }}
                   >
                     Make Weighted
