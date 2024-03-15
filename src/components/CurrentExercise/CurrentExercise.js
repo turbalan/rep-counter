@@ -8,10 +8,16 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
 
   const { handleCompleteExercise } = React.useContext(WorkoutsContext);
 
-  const {workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
+  const { workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
   
   const weightInputRef = React.useRef();
   const repInputRef = React.useRef();
+
+  React.useEffect(() => {
+    if (!currentExercise.weighted) {
+      setRepWeight(0);
+    }
+  }, [currentExercise.weighted]);
 
   React.useEffect(() => {
     console.log(currentExercise);
@@ -36,6 +42,14 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
     localStorage.setItem('sets', JSON.stringify(storedSets));
   };
 
+  const handleMakeWeighted = () => {
+    setCurrentExercise((oldExercise) => {
+      const newExercise = { ...oldExercise, weighted: true }
+      return newExercise;
+    });
+    weightInputRef?.current?.focus();
+  }
+
   return (
     <div>
       {typeof currentExercise.length === 'undefined' ? (
@@ -53,6 +67,7 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
                     ref={repInputRef}
                     id="rep-number"
                     type="number"
+                    min={1}
                     value={repCount}
                     onChange={(event) => {
                       setRepCount(event.target.value);
@@ -83,6 +98,7 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
                       ref={weightInputRef}
                       id="rep-weigh"
                       type="number"
+                      min={1}
                       value={repWeight}
                       onChange={(event) => {
                         setRepWeight(event.target.value);
@@ -110,12 +126,7 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
               {workoutStatus === STATUS.idle ? (
                 <>
                   <p>Make the {currentExercise.name} weighted?</p>
-                  <button
-                    onClick={() => {
-                      setCurrentExercise({ ...currentExercise, weighted: true });
-                      weightInputRef?.current?.focus();
-                    }}
-                  >
+                  <button onClick={handleMakeWeighted}>
                     Make Weighted
                   </button>
                 </>
@@ -129,12 +140,12 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
           )}
           {workoutStatus === STATUS.idle ? (
             <button
-              disabled={repCount === 0 || (currentExercise.weighted && repWeight === 0)}
+              disabled={!repCount || (currentExercise.weighted && !repWeight)}
               onClick={() => {
                 setWorkoutStatus(STATUS.working)
               }}
             >
-              Start Workout
+              Begin Workout
             </button>
           ) : (
             <>
