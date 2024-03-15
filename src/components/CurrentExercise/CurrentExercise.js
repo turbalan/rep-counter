@@ -6,14 +6,16 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
   const [repWeight, setRepWeight] = React.useState(0);
   const [setCount, setSetCount] = React.useState(0);
 
-  const { handleCompleteExercise, workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
+  const { handleCompleteExercise } = React.useContext(WorkoutsContext);
+
+  const {workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
   
   const weightInputRef = React.useRef();
   const repInputRef = React.useRef();
 
   React.useEffect(() => {
     console.log(currentExercise);
-    Object.hasOwn(currentExercise, 'name') && repInputRef.current.focus();
+    Object.hasOwn(currentExercise, 'name') && repInputRef?.current && repInputRef?.current.focus();
   }, [currentExercise]);
 
   const clearSets = () => {
@@ -83,14 +85,23 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
             </div>
           ) : (
             <div>
-              <p>Make the {currentExercise.name} weighted?</p>
-              <button
-                onClick={() => {
-                  setCurrentExercise({ ...currentExercise, weighted: true });
-                }}
-              >
-                Make Weighted
-              </button>
+              {workoutStatus === STATUS.idle ? (
+                <>
+                  <p>Make the {currentExercise.name} weighted?</p>
+                  <button
+                    onClick={() => {
+                      setCurrentExercise({ ...currentExercise, weighted: true });
+                    }}
+                  >
+                    Make Weighted
+                  </button>
+                </>
+                ) : null
+              }
+              {workoutStatus === STATUS.working ? (
+                <p>Body weight</p>
+                ) : null
+              }
             </div>
           )}
           {workoutStatus === STATUS.idle ? (

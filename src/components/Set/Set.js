@@ -1,7 +1,6 @@
 import React from 'react';
 import * as data from '/data/exercises.json';
 import ExercisesList from '../ExercisesList';
-import { WorkoutsContext } from '../WorkoutProvider';
 import CurrentExercise from '../CurrentExercise/CurrentExercise';
 
 /*
@@ -26,7 +25,10 @@ function Set() {
         currentExercise={currentExercise}
         setCurrentExercise={setCurrentExercise}
       />
-      <CurrentExercise currentExercise={currentExercise} setCurrentExercise={setCurrentExercise} />
+      <CurrentExercise
+        currentExercise={currentExercise} 
+        setCurrentExercise={setCurrentExercise} 
+      />
     </div>
   );
 }
