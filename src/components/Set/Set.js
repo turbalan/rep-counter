@@ -25,10 +25,13 @@ function Set() {
         currentExercise={currentExercise}
         setCurrentExercise={setCurrentExercise}
       />
-      <CurrentExercise
-        currentExercise={currentExercise} 
-        setCurrentExercise={setCurrentExercise} 
-      />
+      {currentExercise.name ? (
+        <CurrentExercise
+          currentExercise={currentExercise} 
+          setCurrentExercise={setCurrentExercise} 
+        />
+        ) : null
+      }
     </div>
   );
 }
