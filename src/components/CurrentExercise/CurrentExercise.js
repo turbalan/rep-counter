@@ -2,21 +2,81 @@ import React from 'react';
 import { WorkoutsContext } from '../WorkoutProvider';
 import CountInput from '../CountInput/CountInput';
 
+const INITIAL_STATE = {
+  repCount: 0,
+  repWeight: 0,
+  numberOfSets: 0
+}
+
+function reducer (state, action) {
+  switch (action.type) {
+    case ('set-weight'): {
+      return {
+        ...state,
+        repWeight: action.value
+      }
+    }
+    case ('set-reps'): {
+      return {
+        ...state,
+        repCount: action.value
+      }
+    }
+    case ('count-set'): {
+      return {
+        ...state,
+        numberOfSets: state.numberOfSets + 1,
+      }
+    }
+    case ('clear-sets'): {
+      return {
+        ...state,
+        numberOfSets: 0
+      }
+    }
+    default: return state;
+  }
+}
+
 function CurrentExercise({currentExercise, setCurrentExercise}) {
-  const [repCount, setRepCount] = React.useState(0);
-  const [repWeight, setRepWeight] = React.useState(0);
-  const [numberOfSets, setNumberOfSets] = React.useState(0);
+  const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
+  const { repCount, repWeight, numberOfSets } = state;
 
   const { handleCompleteExercise } = React.useContext(WorkoutsContext);
-
   const { workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
   
   const weightInputRef = React.useRef();
   const repInputRef = React.useRef();
 
+  function handleRepCount(value) {
+    dispatch({
+      type: 'set-reps',
+      value: value
+    })
+  }
+
+  const handleWeight = (value) => {
+    dispatch({
+      type: 'set-weight',
+      value: value
+    })
+  }
+
+  const countSet = () => {
+    dispatch({
+      type: 'count-set',
+    })
+  }
+
+  const clearSets = () => {
+    dispatch({
+      type: 'clear-sets'
+    })
+  }
+
   React.useEffect(() => {
     if (!currentExercise.weighted) {
-      setRepWeight(0);
+      handleRepCount(0);
     }
   }, [currentExercise.weighted]);
 
@@ -25,12 +85,12 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
     Object.hasOwn(currentExercise, 'name') && repInputRef?.current && repInputRef?.current.focus();
   }, [currentExercise]);
 
-  const clearSets = () => {
+  const cleanupSets = () => {
     localStorage.removeItem('sets');
-    setNumberOfSets(0);
+    clearSets();
     setCurrentExercise({});
-    setRepCount(0);
-    setRepWeight(0);
+    handleRepCount(0);
+    handleWeight(0);
   };
 
   const handleSaveSet = (set) => {
@@ -60,14 +120,14 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
             <CountInput 
               message={'How many reps?'}
               count={repCount}
-              setCount={setRepCount}
+              setCount={handleRepCount}
               reference={repInputRef}
             />
             {currentExercise.weighted ? (
               <CountInput
                 message={`What's the weight?`}
                 count={repWeight}
-                setCount={setRepWeight}
+                setCount={handleWeight}
                 reference={weightInputRef}
               />
             ) : (
@@ -99,11 +159,11 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
             )}
             <button
               onClick={() => {
-                setNumberOfSets(numberOfSets + 1);
+                countSet()
                 handleSaveSet({
                   exercise: currentExercise.name,
                   reps: repCount,
-                  weight: repWeight,
+                  weight: currentExercise.weighted ? repWeight : 'Body weight',
                 });
               }}
             >
@@ -115,7 +175,7 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
                 <button
                   onClick={() => {
                     handleCompleteExercise();
-                    clearSets();
+                    cleanupSets();
                     setWorkoutStatus(STATUS.idle)
                   }}
                 >

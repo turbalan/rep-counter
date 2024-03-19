@@ -1,12 +1,13 @@
 import React from 'react';
 
-export const STATUS = {
+const STATUS = {
   idle: 'IDLE',
   working: 'WORKING',
   complete: 'COMPLETED',
 };
 
 export const WorkoutsContext = React.createContext();
+
 function WorkoutProvider({ children }) {
   const [storedExercises, setStoreExercises] = React.useState([]);
   const [workoutStatus, setWorkoutStatus] = React.useState(STATUS.idle);
