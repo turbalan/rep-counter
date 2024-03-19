@@ -1,12 +1,17 @@
 import React from 'react';
 import ExerciseListItem from '../ExerciseListItem';
+import { WorkoutsContext } from '../WorkoutProvider';
 
 function ExercisesList({ exercises, currentExercise, setCurrentExercise }) {
   const [isListOpen, setIsListOpen] = React.useState(false);
 
+  const { workoutStatus, STATUS } = React.useContext(WorkoutsContext);
+
   React.useEffect(() => {
     currentExercise && setIsListOpen(false);
   }, [currentExercise]);
+
+  if (workoutStatus === STATUS.working) return;
 
   return (
     <div>
