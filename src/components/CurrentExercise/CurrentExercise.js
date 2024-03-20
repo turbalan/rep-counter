@@ -1,7 +1,8 @@
 import React from 'react';
 import { produce } from 'immer';
 import { WorkoutsContext } from '../WorkoutProvider';
-import CountInput from '../CountInput/CountInput';
+import RepCountField from './RepCountField';
+import RepWeightField from './RepWeightField';
 
 const INITIAL_STATE = {
   repCount: 0,
@@ -36,10 +37,7 @@ function reducer (state, action) {
 function CurrentExercise({currentExercise, setCurrentExercise}) {
   const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
   const { repCount, repWeight, numberOfSets } = state;
-
-  const { handleCompleteExercise } = React.useContext(WorkoutsContext);
-  const { workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
-  
+  const { handleCompleteExercise, workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
   const weightInputRef = React.useRef();
   const repInputRef = React.useRef();
 
@@ -108,80 +106,53 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
 
   return (
     <div>
-      <div>
-        <p>{currentExercise.name}</p>
-        {workoutStatus === STATUS.idle ? (
-          <div>
-            <CountInput 
-              message={'How many reps?'}
-              count={repCount}
-              setCount={handleRepCount}
-              reference={repInputRef}
-            />
-            {currentExercise.weighted ? (
-              <CountInput
-                message={`What's the weight?`}
-                count={repWeight}
-                setCount={handleWeight}
-                reference={weightInputRef}
-              />
-            ) : (
-            <>
-              <p>Make the {currentExercise.name} weighted?</p>
-              <button onClick={handleMakeWeighted}>
-                Make Weighted
+      <p>{currentExercise.name}</p>
+      <RepCountField repCount={repCount} handleRepCount={handleRepCount} ref={repInputRef} />
+      <RepWeightField weighted={currentExercise.weighted} name={currentExercise.name} repWeight={repWeight} handleWeight={handleWeight} ref={weightInputRef} handleMakeWeighted={handleMakeWeighted}/>
+      {workoutStatus === STATUS.idle ? (
+        <div>
+          <button
+            disabled={repCount < 1 || (currentExercise.weighted && repWeight < 1)}
+            onClick={() => {
+              setWorkoutStatus(STATUS.working)
+            }}
+          >
+            Begin Workout
+          </button>
+        </div>
+      ) : null
+      }
+      {workoutStatus === STATUS.working ? (
+        <div>
+          <button
+            onClick={() => {
+              countSet()
+              handleSaveSet({
+                exercise: currentExercise.name,
+                reps: repCount,
+                weight: currentExercise.weighted ? repWeight : 'Body weight',
+              });
+            }}
+          >
+            Count this set
+          </button>
+          <p>{numberOfSets}</p>
+          {numberOfSets > 0 && (
+            <div>
+              <button
+                onClick={() => {
+                  handleCompleteExercise();
+                  cleanupSets();
+                  setWorkoutStatus(STATUS.idle)
+                }}
+              >
+                Complete {currentExercise.name}
               </button>
-            </>
-            )}
-            <button
-              disabled={repCount < 1 || (currentExercise.weighted && repWeight < 1)}
-              onClick={() => {
-                setWorkoutStatus(STATUS.working)
-              }}
-            >
-              Begin Workout
-            </button>
-          </div>
+            </div>
+          )}
+        </div>
         ) : null
-        }
-        {workoutStatus === STATUS.working ? (
-          <div>
-            <p>Reps: <strong>{repCount}</strong></p>
-            {currentExercise.weighted ? (
-              <p>Weight: <strong>{repWeight}</strong></p>
-              ) : (
-              <p>Body weight</p>
-            )}
-            <button
-              onClick={() => {
-                countSet()
-                handleSaveSet({
-                  exercise: currentExercise.name,
-                  reps: repCount,
-                  weight: currentExercise.weighted ? repWeight : 'Body weight',
-                });
-              }}
-            >
-              Count this set
-            </button>
-            <p>{numberOfSets}</p>
-            {numberOfSets > 0 && (
-              <div>
-                <button
-                  onClick={() => {
-                    handleCompleteExercise();
-                    cleanupSets();
-                    setWorkoutStatus(STATUS.idle)
-                  }}
-                >
-                  Complete {currentExercise.name}
-                </button>
-              </div>
-            )}
-          </div>
-        ) : null
-        }
-      </div>
+      }
     </div>
   )
 }

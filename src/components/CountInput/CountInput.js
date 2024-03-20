@@ -1,14 +1,17 @@
 import React from 'react';
 
-function CountInput({ message, count, setCount, reference }) {
+const CountInput = React.forwardRef((props, ref) => {
+  const { message, count, setCount } = props;
   const id = React.useId();
+  const fallbackRef = React.useRef();
+  const localRef = ref || fallbackRef;
 
   return (
     <div>
       <label htmlFor={id}>
         {message}{' '}
         <input
-          ref={reference}
+          ref={localRef}
           id={id}
           type="number"
           min={1}
@@ -21,7 +24,7 @@ function CountInput({ message, count, setCount, reference }) {
       {count ? (
         <button onClick={() => {
           setCount(0);
-          reference.current.focus();
+          localRef?.current?.focus();
         }}>
           Reset 
         </button>
@@ -29,6 +32,6 @@ function CountInput({ message, count, setCount, reference }) {
       }
     </div>
   )
-}
+});
 
 export default CountInput;
