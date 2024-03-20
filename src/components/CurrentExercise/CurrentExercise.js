@@ -1,4 +1,5 @@
 import React from 'react';
+import { produce } from 'immer';
 import { WorkoutsContext } from '../WorkoutProvider';
 import CountInput from '../CountInput/CountInput';
 
@@ -9,33 +10,27 @@ const INITIAL_STATE = {
 }
 
 function reducer (state, action) {
-  switch (action.type) {
-    case ('set-weight'): {
-      return {
-        ...state,
-        repWeight: action.value
+  return produce(state, (draft) => {
+    switch (action.type) {
+      case ('set-weight'): {
+        draft.repWeight = action.value;
+        break;
       }
-    }
-    case ('set-reps'): {
-      return {
-        ...state,
-        repCount: action.value
+      case ('set-reps'): {
+        draft.repCount = action.value
+        break;
       }
-    }
-    case ('count-set'): {
-      return {
-        ...state,
-        numberOfSets: state.numberOfSets + 1,
+      case ('count-set'): {
+        draft.numberOfSets +=1;
+        break;
       }
-    }
-    case ('clear-sets'): {
-      return {
-        ...state,
-        numberOfSets: 0
+      case ('clear-sets'): {
+        draft.numberOfSets = 0;
+        break;
       }
+      default: return draft;
     }
-    default: return state;
-  }
+  })
 }
 
 function CurrentExercise({currentExercise, setCurrentExercise}) {
