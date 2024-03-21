@@ -9,7 +9,7 @@ const STATUS = {
 export const WorkoutsContext = React.createContext();
 
 function WorkoutProvider({ children }) {
-  const [storedExercises, setStoreExercises] = React.useState([]);
+  const [storedExercises, setStoredExercises] = React.useState([]);
   const [workoutStatus, setWorkoutStatus] = React.useState(STATUS.idle);
 
   const getStoredExercises = () => {
@@ -29,12 +29,12 @@ function WorkoutProvider({ children }) {
     }
 
     localStorage.setItem('exercises', JSON.stringify(locallyStoredExercises));
-    setStoreExercises(locallyStoredExercises);
+    setStoredExercises(locallyStoredExercises);
   };
 
   React.useEffect(() => {
     let mountedExercises = getStoredExercises();
-    setStoreExercises(() => {
+    setStoredExercises(() => {
       return mountedExercises;
     });
   }, []);

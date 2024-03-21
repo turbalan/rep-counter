@@ -3,6 +3,7 @@ import { produce } from 'immer';
 import { WorkoutsContext } from '../WorkoutProvider';
 import RepCountField from './RepCountField';
 import RepWeightField from './RepWeightField';
+import ExerciseControls from './ExerciseControls/ExerciseControls';
 
 const INITIAL_STATE = {
   repCount: 0,
@@ -104,55 +105,18 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
     weightInputRef?.current?.focus();
   }
 
+  const handleSaveWorkot = () => {
+    handleCompleteExercise();
+    cleanupSets();
+    setWorkoutStatus(STATUS.idle)
+  }
+
   return (
     <div>
       <p>{currentExercise.name}</p>
       <RepCountField repCount={repCount} handleRepCount={handleRepCount} ref={repInputRef} />
       <RepWeightField weighted={currentExercise.weighted} name={currentExercise.name} repWeight={repWeight} handleWeight={handleWeight} ref={weightInputRef} handleMakeWeighted={handleMakeWeighted}/>
-      {workoutStatus === STATUS.idle ? (
-        <div>
-          <button
-            disabled={repCount < 1 || (currentExercise.weighted && repWeight < 1)}
-            onClick={() => {
-              setWorkoutStatus(STATUS.working)
-            }}
-          >
-            Begin Workout
-          </button>
-        </div>
-      ) : null
-      }
-      {workoutStatus === STATUS.working ? (
-        <div>
-          <button
-            onClick={() => {
-              countSet()
-              handleSaveSet({
-                exercise: currentExercise.name,
-                reps: repCount,
-                weight: currentExercise.weighted ? repWeight : 'Body weight',
-              });
-            }}
-          >
-            Count this set
-          </button>
-          <p>{numberOfSets}</p>
-          {numberOfSets > 0 && (
-            <div>
-              <button
-                onClick={() => {
-                  handleCompleteExercise();
-                  cleanupSets();
-                  setWorkoutStatus(STATUS.idle)
-                }}
-              >
-                Complete {currentExercise.name}
-              </button>
-            </div>
-          )}
-        </div>
-        ) : null
-      }
+      <ExerciseControls handleSaveSet={handleSaveSet} handleSaveWorkout={handleSaveWorkot} currentExercise={currentExercise} countSet={countSet} repCount={repCount} repWeight={repWeight} numberOfSets={numberOfSets} />
     </div>
   )
 }
