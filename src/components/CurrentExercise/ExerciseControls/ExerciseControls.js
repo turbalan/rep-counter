@@ -12,7 +12,7 @@ function ExerciseControls({ countSet, handleSaveWorkout, currentExercise, repCou
             setWorkoutStatus(STATUS.working);
           }}
         >
-          Begin Workout
+          🏄 Begin Workout
         </button>
       </div>
     )
@@ -25,13 +25,13 @@ function ExerciseControls({ countSet, handleSaveWorkout, currentExercise, repCou
             countSet();
           }}
         >
-          Count this set
+          🏋️ Count this set
         </button>
         <p>{numberOfSets}</p>
         {numberOfSets > 0 && (
           <div>
             <button onClick={handleSaveWorkout}>
-              Complete {currentExercise.name}
+              ✅ Complete {currentExercise.name}
             </button>
           </div>
         )}

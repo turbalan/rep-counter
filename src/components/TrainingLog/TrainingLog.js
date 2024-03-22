@@ -9,7 +9,7 @@ function TrainingLog() {
   if (storedTrainings.length === 0) return;
 
   if (!showTrainingLog) {
-    return <button onClick={() => setShowTrainingLog(true)}>Show Training Log</button>
+    return <button onClick={() => setShowTrainingLog(true)}>📖 Show Training Log</button>
   } else { return (
     <div>
     {storedTrainings.map(training => {
@@ -28,7 +28,7 @@ function TrainingLog() {
         </div>
       )
     })}
-    <button onClick={() => {setShowTrainingLog(false)}}>Hide Training Log</button>
+    <button onClick={() => {setShowTrainingLog(false)}}>📖 Hide Training Log</button>
     </div>
   )
   }

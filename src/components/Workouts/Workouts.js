@@ -21,7 +21,7 @@ function Workouts() {
               </div>
             ))}
           </div>
-          <button onClick={handleLogTraining}>Log training Session</button>
+          <button onClick={handleLogTraining}>📝 Log training Session</button>
         </div>
       )
     }

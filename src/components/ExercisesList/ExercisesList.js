@@ -22,8 +22,8 @@ function ExercisesList({ exercises, currentExercise, setCurrentExercise }) {
         }}
       >
         {currentExercise.name
-          ? `Current Exercise: ${currentExercise.name}`
-          : `Choose an exercise`}
+          ? `👉 Current Exercise: ${currentExercise.name}`
+          : `🔍 Choose an exercise`}
       </button>
 
       {isListOpen &&
