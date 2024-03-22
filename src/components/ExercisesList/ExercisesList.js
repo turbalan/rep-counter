@@ -5,7 +5,7 @@ import { WorkoutsContext } from '../WorkoutProvider';
 function ExercisesList({ exercises, currentExercise, setCurrentExercise }) {
   const [isListOpen, setIsListOpen] = React.useState(false);
 
-  const { workoutStatus, STATUS } = React.useContext(WorkoutsContext);
+  const { setWorkoutStatus, workoutStatus, STATUS } = React.useContext(WorkoutsContext);
 
   React.useEffect(() => {
     currentExercise && setIsListOpen(false);
@@ -18,6 +18,7 @@ function ExercisesList({ exercises, currentExercise, setCurrentExercise }) {
       <button
         onClick={() => {
           setIsListOpen(!isListOpen);
+          setWorkoutStatus(STATUS.idle)
         }}
       >
         {currentExercise.name

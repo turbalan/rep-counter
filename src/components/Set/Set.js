@@ -8,7 +8,7 @@ To have a set you:
 1. Push on a "dropdown" button that lists all the available exercises
 2. To select an exercise you click on that exercise
 3. After that selection you enter the reps in the set and the weight used
-4. After each set you click on a "set complete" button that records that set
+4. After each set you click on a "set complete" button that counts the set
 5. After completing some sets, the user can click on a "save workout"
     button, which will be saved to localstorage
 */

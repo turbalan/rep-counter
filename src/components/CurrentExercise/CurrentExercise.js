@@ -35,12 +35,23 @@ function reducer (state, action) {
   })
 }
 
-function CurrentExercise({currentExercise, setCurrentExercise}) {
+function CurrentExercise({ currentExercise, setCurrentExercise }) {
   const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
   const { repCount, repWeight, numberOfSets } = state;
   const { handleCompleteExercise, workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
   const weightInputRef = React.useRef();
   const repInputRef = React.useRef();
+
+  React.useEffect(() => {
+    if (!currentExercise.weighted) {
+      handleRepCount(0);
+    }
+  }, [currentExercise.weighted]);
+
+  React.useEffect(() => {
+    console.log(currentExercise);
+    Object.hasOwn(currentExercise, 'name') && repInputRef?.current && repInputRef?.current.focus();
+  }, [currentExercise]);
 
   function handleRepCount(value) {
     dispatch({
@@ -68,17 +79,6 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
     })
   }
 
-  React.useEffect(() => {
-    if (!currentExercise.weighted) {
-      handleRepCount(0);
-    }
-  }, [currentExercise.weighted]);
-
-  React.useEffect(() => {
-    console.log(currentExercise);
-    Object.hasOwn(currentExercise, 'name') && repInputRef?.current && repInputRef?.current.focus();
-  }, [currentExercise]);
-
   const cleanupSets = () => {
     localStorage.removeItem('sets');
     clearSets();
@@ -87,14 +87,14 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
     handleWeight(0);
   };
 
-  const handleSaveSet = (set) => {
-    let storedSets = JSON.parse(localStorage.getItem('sets')) || [];
-    if (storedSets.length > 0) {
-      storedSets = [...storedSets, set];
-    } else {
-      storedSets.push(set);
+  const handleSaveSets = () => {
+    const setToSave = {
+      exercise: currentExercise.name,
+      reps: repCount,
+      weight: currentExercise.weighted ? repWeight : 'Body weight',
+      sets: numberOfSets,
     }
-    localStorage.setItem('sets', JSON.stringify(storedSets));
+    localStorage.setItem('sets', JSON.stringify(setToSave));
   };
 
   const handleMakeWeighted = () => {
@@ -105,7 +105,8 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
     weightInputRef?.current?.focus();
   }
 
-  const handleSaveWorkot = () => {
+  const handleSaveWorkout = () => {
+    handleSaveSets();
     handleCompleteExercise();
     cleanupSets();
     setWorkoutStatus(STATUS.idle)
@@ -116,7 +117,7 @@ function CurrentExercise({currentExercise, setCurrentExercise}) {
       <p>{currentExercise.name}</p>
       <RepCountField repCount={repCount} handleRepCount={handleRepCount} ref={repInputRef} />
       <RepWeightField weighted={currentExercise.weighted} name={currentExercise.name} repWeight={repWeight} handleWeight={handleWeight} ref={weightInputRef} handleMakeWeighted={handleMakeWeighted}/>
-      <ExerciseControls handleSaveSet={handleSaveSet} handleSaveWorkout={handleSaveWorkot} currentExercise={currentExercise} countSet={countSet} repCount={repCount} repWeight={repWeight} numberOfSets={numberOfSets} />
+      <ExerciseControls handleSaveSets={handleSaveSets} handleSaveWorkout={handleSaveWorkout} currentExercise={currentExercise} countSet={countSet} repCount={repCount} repWeight={repWeight} numberOfSets={numberOfSets} />
     </div>
   )
 }

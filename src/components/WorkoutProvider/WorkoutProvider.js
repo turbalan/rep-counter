@@ -1,9 +1,9 @@
 import React from 'react';
 
 const STATUS = {
-  idle: 'IDLE',
-  working: 'WORKING',
-  complete: 'COMPLETED',
+  idle: 0,
+  working: 1,
+  complete: 2,
 };
 
 export const WorkoutsContext = React.createContext();
@@ -13,10 +13,12 @@ function WorkoutProvider({ children }) {
   const [workoutStatus, setWorkoutStatus] = React.useState(STATUS.idle);
 
   const getStoredExercises = () => {
-    let locallyStoredExercises =
-      JSON.parse(localStorage.getItem('exercises')) || [];
-    return locallyStoredExercises;
+    return JSON.parse(localStorage.getItem('exercises')) || [];
   };
+
+  const getStoredTrainingLog = () => {
+    return JSON.parse(localStorage.getItem('traininglog')) || [];
+  }
 
   const handleCompleteExercise = () => {
     let storedSets = JSON.parse(localStorage.getItem('sets'));
@@ -32,21 +34,40 @@ function WorkoutProvider({ children }) {
     setStoredExercises(locallyStoredExercises);
   };
 
+  const handleLogTraining = () => {
+    const exercises = getStoredExercises();
+    if (exercises.length === 0) return;
+    let localTrainings = getStoredTrainingLog();
+    const date = new Date();
+    const trainingTitle = `Training session ${date.toLocaleString()}`
+    const session = {
+      title: trainingTitle,
+      date: date,
+      exercises: exercises
+    };
+    localTrainings = [...localTrainings, session];
+    localStorage.setItem('traininglog', JSON.stringify(localTrainings));
+    localStorage.removeItem('exercises');
+    setWorkoutStatus(STATUS.complete);
+    setStoredExercises([]);
+  }
+
   React.useEffect(() => {
-    let mountedExercises = getStoredExercises();
     setStoredExercises(() => {
-      return mountedExercises;
+      return getStoredExercises()
     });
   }, []);
 
   React.useEffect(() => {
-    console.log(storedExercises);
+    console.table('Stored Exercises:', storedExercises);
   }, [storedExercises]);
 
   const value = { 
     storedExercises, 
     getStoredExercises,
+    getStoredTrainingLog,
     handleCompleteExercise,
+    handleLogTraining,
     STATUS,
     workoutStatus,
     setWorkoutStatus

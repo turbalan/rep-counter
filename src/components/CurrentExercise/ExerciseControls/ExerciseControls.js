@@ -1,7 +1,7 @@
 import React from 'react';
 import { WorkoutsContext } from '../../WorkoutProvider';
 
-function ExerciseControls({ countSet, handleSaveSet, handleSaveWorkout, currentExercise, repCount, repWeight, numberOfSets }) {
+function ExerciseControls({ countSet, handleSaveWorkout, currentExercise, repCount, repWeight, numberOfSets }) {
   const { workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
   if (workoutStatus === STATUS.idle) {
     return (
@@ -9,7 +9,7 @@ function ExerciseControls({ countSet, handleSaveSet, handleSaveWorkout, currentE
         <button
           disabled={repCount < 1 || (currentExercise.weighted && repWeight < 1)}
           onClick={() => {
-            setWorkoutStatus(STATUS.working)
+            setWorkoutStatus(STATUS.working);
           }}
         >
           Begin Workout
@@ -22,12 +22,7 @@ function ExerciseControls({ countSet, handleSaveSet, handleSaveWorkout, currentE
       <div>
         <button
           onClick={() => {
-            countSet()
-            handleSaveSet({
-              exercise: currentExercise.name,
-              reps: repCount,
-              weight: currentExercise.weighted ? repWeight : 'Body weight',
-            });
+            countSet();
           }}
         >
           Count this set

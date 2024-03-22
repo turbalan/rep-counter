@@ -6,7 +6,7 @@ function ExerciseListItem({ exercise, weighted, setCurrentExercise }) {
   return (
     <button
       onClick={() => {
-        setCurrentExercise({ ...exercise, weighted });
+        setCurrentExercise({ ...exercise, weighted, sets: 0 });
       }}
     >
       {name}
