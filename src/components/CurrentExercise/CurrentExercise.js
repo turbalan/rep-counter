@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css';
 import { produce } from 'immer';
 import { WorkoutsContext } from '../WorkoutProvider';
 import RepCountField from './RepCountField';
@@ -113,12 +114,12 @@ function CurrentExercise({ currentExercise, setCurrentExercise }) {
   }
 
   return (
-    <div>
+    <section className='current-exercise'>
       <p>{currentExercise.name}</p>
       <RepCountField repCount={repCount} handleRepCount={handleRepCount} ref={repInputRef} />
       <RepWeightField weighted={currentExercise.weighted} name={currentExercise.name} repWeight={repWeight} handleWeight={handleWeight} ref={weightInputRef} handleMakeWeighted={handleMakeWeighted}/>
       <ExerciseControls handleSaveSets={handleSaveSets} handleSaveWorkout={handleSaveWorkout} currentExercise={currentExercise} countSet={countSet} repCount={repCount} repWeight={repWeight} numberOfSets={numberOfSets} />
-    </div>
+    </section>
   )
 }
 

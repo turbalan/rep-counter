@@ -2,6 +2,7 @@ import React from 'react';
 import * as data from '/data/exercises.json';
 import ExercisesList from '../ExercisesList';
 import CurrentExercise from '../CurrentExercise/CurrentExercise';
+import './styles.css';
 
 /*
 To have a set you:
@@ -19,7 +20,7 @@ function Set() {
   const exercises = JSON.parse(json);
 
   return (
-    <div>
+    <article className='set'>
       <ExercisesList
         exercises={exercises}
         currentExercise={currentExercise}
@@ -32,7 +33,7 @@ function Set() {
         />
         ) : null
       }
-    </div>
+    </article>
   );
 }
 

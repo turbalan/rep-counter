@@ -1,0 +1,13 @@
+.workouts {
+  padding-block: 1rem 1.5rem;
+}
+
+.workout-item {
+  margin-block-end: 0.5rem;
+}
+
+.workout-item-content {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}

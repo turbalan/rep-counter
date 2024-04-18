@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css';
 import ExerciseListItem from '../ExerciseListItem';
 import { WorkoutsContext } from '../WorkoutProvider';
 
@@ -29,9 +30,9 @@ function ExercisesList({ exercises, currentExercise, setCurrentExercise }) {
       {isListOpen &&
         exercises.map((item) => {
           return (
-            <div key={item.id} id={item.id}>
+            <div key={item.id} id={item.id} className='exercises-list-container'>
               <p>{item.name}</p>
-              <ul>
+              <ul className='exercise-list'>
                 {item.exercises.map((exercise) => {
                   return (
                     <li key={exercise.id}>

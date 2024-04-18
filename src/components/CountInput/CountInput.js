@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css';
 
 const CountInput = React.forwardRef((props, ref) => {
   const { message, count, setCount } = props;
@@ -7,7 +8,7 @@ const CountInput = React.forwardRef((props, ref) => {
   const localRef = ref || fallbackRef;
 
   return (
-    <div>
+    <div className='count-input'>
       <label htmlFor={id}>
         {message}{' '}
         <input
@@ -22,10 +23,13 @@ const CountInput = React.forwardRef((props, ref) => {
         />
       </label>
       {count ? (
-        <button onClick={() => {
-          setCount(0);
-          localRef?.current?.focus();
-        }}>
+        <button 
+          className='count-input-reset'
+          onClick={() => {
+            setCount(0);
+            localRef?.current?.focus();
+          }}
+        >
           Reset 
         </button>
         ) : null
