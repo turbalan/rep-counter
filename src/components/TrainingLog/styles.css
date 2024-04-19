@@ -1,3 +1,7 @@
+.set + .training-log {
+  margin-block-start: 1rem;
+}
+
 .training-log-entry {
   padding-block-start: 1rem;
 }

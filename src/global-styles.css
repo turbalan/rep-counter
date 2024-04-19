@@ -74,6 +74,7 @@ button {
   border-radius: 0.25rem;
   border-width: 1px;
   border-color: rgba(0,0,0,0.25);
+  cursor: pointer;
 }
 
 /* Exercise List (choose an exercise) */

@@ -25,7 +25,8 @@
     "new-component": "^5.0.2",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-feather": "^2.0.10"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "staticFiles": {

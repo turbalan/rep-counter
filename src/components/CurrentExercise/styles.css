@@ -1,3 +1,11 @@
 .current-exercise {
   padding-block: 1.5rem;
+
+  &.working {
+    font-size: 2rem;
+
+  & p {
+      margin-block: 0.5rem;
+    }
+  }
 }
