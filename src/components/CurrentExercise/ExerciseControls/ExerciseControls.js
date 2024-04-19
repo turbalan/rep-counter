@@ -35,6 +35,12 @@ function ExerciseControls({ countSet, handleSaveWorkout, currentExercise, setCur
         >
           🏋️ Count this set
         </button>
+        <button onClick={() => {
+          setWorkoutStatus(STATUS.idle);
+          setCurrentExercise(null);
+        }}>
+          Cancel
+        </button>
         <p>Sets: <strong>{numberOfSets}</strong></p>
         {numberOfSets > 0 && (
           <button onClick={handleSaveWorkout}>
