@@ -1,5 +1,7 @@
 import React from 'react';
 import './styles.css';
+import VisuallyHidden from '../VisuallyHidden/VisuallyHidden';
+import { X } from 'react-feather';
 
 const CountInput = React.forwardRef((props, ref) => {
   const { message, count, setCount } = props;
@@ -21,19 +23,22 @@ const CountInput = React.forwardRef((props, ref) => {
             setCount(event.target.value);
           }}
         />
+        {count ? (
+          <button 
+            className={`count-input-reset ${count ? 'fade' : ''}`}
+            onClick={() => {
+              setCount(0);
+              localRef?.current?.focus();
+            }}
+          >
+            <X aria-hidden={true} size={16} />
+            <VisuallyHidden>
+              Reset input value
+            </VisuallyHidden>
+          </button>
+          ) : null
+        }
       </label>
-      {count ? (
-        <button 
-          className='count-input-reset'
-          onClick={() => {
-            setCount(0);
-            localRef?.current?.focus();
-          }}
-        >
-          Reset 
-        </button>
-        ) : null
-      }
     </div>
   )
 });

@@ -3,13 +3,13 @@
   position: relative;
 
   & label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    display: block;
     width: 250px;
+    position: relative;
   }
 
   & input {
+    width: 100%;
     padding: 0.25rem 1rem;
     border: 1px solid rgba(0,0,0,0.25);
     border-radius: 16px;
@@ -17,4 +17,27 @@
 }
 
 .count-input-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border-radius: 50%;
+  position: absolute;
+  left: calc(100% + 2px);
+  bottom: 6px;
+  line-height: 1;
+  opacity: 0;
+  animation: reset-fade 0.1s ease-in forwards;
+}
+
+@keyframes reset-fade {
+  from {
+
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
