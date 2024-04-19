@@ -83,7 +83,7 @@ function CurrentExercise({ currentExercise, setCurrentExercise }) {
   const cleanupSets = () => {
     localStorage.removeItem('sets');
     clearSets();
-    setCurrentExercise({});
+    setCurrentExercise(null);
     handleRepCount(0);
     handleWeight(0);
   };
@@ -118,7 +118,7 @@ function CurrentExercise({ currentExercise, setCurrentExercise }) {
       <p>{currentExercise.name}</p>
       <RepCountField repCount={repCount} handleRepCount={handleRepCount} ref={repInputRef} />
       <RepWeightField weighted={currentExercise.weighted} name={currentExercise.name} repWeight={repWeight} handleWeight={handleWeight} ref={weightInputRef} handleMakeWeighted={handleMakeWeighted}/>
-      <ExerciseControls handleSaveSets={handleSaveSets} handleSaveWorkout={handleSaveWorkout} currentExercise={currentExercise} countSet={countSet} repCount={repCount} repWeight={repWeight} numberOfSets={numberOfSets} />
+      <ExerciseControls handleSaveSets={handleSaveSets} handleSaveWorkout={handleSaveWorkout} currentExercise={currentExercise} setCurrentExercise={setCurrentExercise} countSet={countSet} repCount={repCount} repWeight={repWeight} numberOfSets={numberOfSets} />
     </section>
   )
 }

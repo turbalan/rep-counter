@@ -1,18 +1,28 @@
 import React from 'react';
 import { WorkoutsContext } from '../../WorkoutProvider';
+import './styles.css';
 
-function ExerciseControls({ countSet, handleSaveWorkout, currentExercise, repCount, repWeight, numberOfSets }) {
+function ExerciseControls({ countSet, handleSaveWorkout, currentExercise, setCurrentExercise, repCount, repWeight, numberOfSets }) {
   const { workoutStatus, setWorkoutStatus, STATUS } = React.useContext(WorkoutsContext);
+
   if (workoutStatus === STATUS.idle) {
     return (
-      <button
-        disabled={repCount < 1 || (currentExercise.weighted && repWeight < 1)}
-        onClick={() => {
-          setWorkoutStatus(STATUS.working);
-        }}
-      >
-        🏄 Begin Workout
-      </button>
+      <div className="current-exercise-controls">
+        <button
+          disabled={repCount < 1 || (currentExercise.weighted && repWeight < 1)}
+          onClick={() => {
+            setWorkoutStatus(STATUS.working);
+          }}
+        >
+          🏄 Begin Workout
+        </button>
+        {' or '}
+        <button onClick={() => {
+          setCurrentExercise(null);
+        }}>
+          Go back
+        </button>
+      </div>
   )
   }
   if (workoutStatus === STATUS.working) {

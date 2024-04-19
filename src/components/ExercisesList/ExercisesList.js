@@ -5,7 +5,6 @@ import { WorkoutsContext } from '../WorkoutProvider';
 
 function ExercisesList({ exercises, currentExercise, setCurrentExercise }) {
   const [isListOpen, setIsListOpen] = React.useState(false);
-
   const { setWorkoutStatus, workoutStatus, STATUS } = React.useContext(WorkoutsContext);
 
   React.useEffect(() => {
@@ -22,7 +21,7 @@ function ExercisesList({ exercises, currentExercise, setCurrentExercise }) {
           setWorkoutStatus(STATUS.idle)
         }}
       >
-        {currentExercise.name
+        {currentExercise 
           ? `👉 Current Exercise: ${currentExercise.name}`
           : `🔍 Choose an exercise`}
       </button>

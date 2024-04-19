@@ -1,0 +1,11 @@
+.current-exercise-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-block-start: 1rem;
+
+  & button {
+    flex: 1 0 auto;
+  }
+}

@@ -14,7 +14,7 @@ To have a set you:
     button, which will be saved to localstorage
 */
 function Set() {
-  const [currentExercise, setCurrentExercise] = React.useState({});
+  const [currentExercise, setCurrentExercise] = React.useState(null);
 
   const json = JSON.stringify(data);
   const exercises = JSON.parse(json);
@@ -26,7 +26,7 @@ function Set() {
         currentExercise={currentExercise}
         setCurrentExercise={setCurrentExercise}
       />
-      {currentExercise.name ? (
+      {currentExercise ? (
         <CurrentExercise
           currentExercise={currentExercise} 
           setCurrentExercise={setCurrentExercise} 
