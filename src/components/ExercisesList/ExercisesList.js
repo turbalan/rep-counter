@@ -2,6 +2,7 @@ import React from 'react';
 import './styles.css';
 import ExerciseListItem from '../ExerciseListItem';
 import { WorkoutsContext } from '../WorkoutProvider';
+import OtherExerciseItem from '../OtherExerciseItem/OtherExerciseItem';
 
 function ExercisesList({ exercises, currentExercise, setCurrentExercise }) {
   const [isListOpen, setIsListOpen] = React.useState(false);
@@ -26,27 +27,33 @@ function ExercisesList({ exercises, currentExercise, setCurrentExercise }) {
           : `🔍 Choose an exercise`}
       </button>
 
-      {isListOpen &&
-        exercises.map((item) => {
-          return (
-            <div key={item.id} id={item.id} className='exercises-list-container'>
-              <p>{item.name}</p>
-              <ul className='exercise-list'>
-                {item.exercises.map((exercise) => {
-                  return (
-                    <li key={exercise.id}>
-                      <ExerciseListItem
-                        exercise={exercise}
-                        weighted={item.weighted}
-                        setCurrentExercise={setCurrentExercise}
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          );
-        })}
+      {isListOpen && (
+        <>
+          {exercises.map((item) => {
+              return (
+                <div key={item.id} id={item.id} className='exercises-list-container'>
+                  <p>{item.name}</p>
+                  <ul className='exercise-list'>
+                    {item.exercises.map((exercise) => {
+                      return (
+                        <li key={exercise.id}>
+                          <ExerciseListItem
+                            exercise={exercise}
+                            weighted={item.weighted}
+                            setCurrentExercise={setCurrentExercise}
+                          />
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })
+          }
+          <OtherExerciseItem setCurrentExercise={setCurrentExercise} />
+        </>
+      )
+      }
     </div>
   );
 }

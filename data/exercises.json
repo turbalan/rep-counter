@@ -1,7 +1,7 @@
 [
   {
-    "id": "free-weight",
-    "name": "Free Weight",
+    "id": "barbell",
+    "name": "Barbell",
     "weighted": true,
     "exercises": [
       {
