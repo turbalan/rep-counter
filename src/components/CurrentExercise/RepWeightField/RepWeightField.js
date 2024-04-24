@@ -25,7 +25,7 @@ const RepWeightField = React.forwardRef((props, ref) => {
   }
   if (workoutStatus === STATUS.working) {
     return weighted ? (
-      <p>Weight: <strong>{repWeight}</strong></p>
+      <p>Weight: <strong>{repWeight}</strong> kg</p>
       ) : (
       <p>Body weight</p>
     )

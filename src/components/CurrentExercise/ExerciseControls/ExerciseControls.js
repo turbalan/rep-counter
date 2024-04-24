@@ -23,7 +23,7 @@ function ExerciseControls({ countSet, handleSaveWorkout, currentExercise, setCur
           Go back
         </button>
       </div>
-  )
+    )
   }
   if (workoutStatus === STATUS.working) {
     return (

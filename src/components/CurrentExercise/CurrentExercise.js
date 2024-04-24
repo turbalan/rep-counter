@@ -115,7 +115,7 @@ function CurrentExercise({ currentExercise, setCurrentExercise }) {
 
   return (
     <section className={`current-exercise ${workoutStatus === STATUS.working ? `working` : ``}`}>
-      <p>{currentExercise.name}</p>
+      <h1 className='current-exercise-name'>{currentExercise.name}</h1>
       <RepCountField repCount={repCount} handleRepCount={handleRepCount} ref={repInputRef} />
       <RepWeightField weighted={currentExercise.weighted} name={currentExercise.name} repWeight={repWeight} handleWeight={handleWeight} ref={weightInputRef} handleMakeWeighted={handleMakeWeighted}/>
       <ExerciseControls handleSaveSets={handleSaveSets} handleSaveWorkout={handleSaveWorkout} currentExercise={currentExercise} setCurrentExercise={setCurrentExercise} countSet={countSet} repCount={repCount} repWeight={repWeight} numberOfSets={numberOfSets} />
